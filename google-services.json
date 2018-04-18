@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "87381003927",
+    "firebase_url": "https://fleettracker-c1fb9.firebaseio.com",
+    "project_id": "fleettracker-c1fb9",
+    "storage_bucket": "fleettracker-c1fb9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87381003927:android:e0d42005689313e1",
+        "android_client_info": {
+          "package_name": "com.techart.fleettracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87381003927-gdbennbi4nl8i62p5sp070912vssleck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techart.fleettracker",
+            "certificate_hash": "96d8d48e74bfd3c78a25270746519b2b56acafdb"
+          }
+        },
+        {
+          "client_id": "87381003927-76b343jhfv9ekgcd146uo49lbsk6tvgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPtYKWLsVVcm3gnCKegaHn8oE_F6uj-iQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87381003927-76b343jhfv9ekgcd146uo49lbsk6tvgk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
