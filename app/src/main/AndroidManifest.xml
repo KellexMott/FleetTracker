@@ -3,7 +3,7 @@
     package="com.techart.fleettracker">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".FleetTracker"
@@ -24,15 +24,19 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".DetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MainActivity">
-        </activity>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAG8B-lndlHa2vmxm4T6qHc3ob5D4TJSxE" />
+
+        <activity
+            android:name=".Detail"
+            android:label="@string/title_activity_detail"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.techart.fleettracker.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

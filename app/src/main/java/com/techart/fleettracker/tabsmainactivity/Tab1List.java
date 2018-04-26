@@ -1,7 +1,9 @@
 package com.techart.fleettracker.tabsmainactivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -12,16 +14,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.techart.fleettracker.DetailsActivity;
+import com.techart.fleettracker.Detail;
+import com.techart.fleettracker.PostKey;
 import com.techart.fleettracker.R;
 import com.techart.fleettracker.models.Fleet;
 import com.techart.fleettracker.utils.FireBaseUtils;
 import com.techart.fleettracker.utils.TimeUtils;
 import com.techart.fleettracker.viewholders.StoryViewHolder;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class Tab1List extends Fragment {
     private RecyclerView rvSearchResults;
+
+    private SharedPreferences mPref;
+    private String postKey;
+    private SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,6 +38,9 @@ public class Tab1List extends Fragment {
         View rootView = inflater.inflate(R.layout.fragement_list, container, false);
 
         rvSearchResults = rootView.findViewById(R.id.rv_track);
+
+       // mPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
         rvSearchResults.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
@@ -39,6 +51,13 @@ public class Tab1List extends Fragment {
 
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mPref = context.getSharedPreferences(String.format("%s",getString(R.string.app_name)), MODE_PRIVATE);
+    }
+
     private void firebaseStorySearch() {
         FirebaseRecyclerAdapter<Fleet,StoryViewHolder> fireBaseRecyclerAdapter = new FirebaseRecyclerAdapter<Fleet, StoryViewHolder>(
                 Fleet.class,R.layout.listing_track,StoryViewHolder.class, FireBaseUtils.mDatabaseFleet)
@@ -46,6 +65,7 @@ public class Tab1List extends Fragment {
             @Override
             protected void populateViewHolder(StoryViewHolder viewHolder, final Fleet model, int position) {
                 final String post_key = getRef(position).getKey();
+                final int pos = position;
                 viewHolder.tvPlateNumber.setText(getString(R.string.fleet,model.getPlateNumber(),model.getDriver()));
                 viewHolder.tvTransit.setText(getString(R.string.transit,model.getFrom(),model.getTo()));
                 viewHolder.lastLocation.setText(getString(R.string.lastLocation,model.getLastLocation()));
@@ -65,14 +85,14 @@ public class Tab1List extends Fragment {
                         viewHolder.rlUmbrella.setBackground(getResources().getDrawable(R.drawable.cardview_red));
                         viewHolder.tvPlateNumber.setTextColor(getResources().getColor(R.color.colorRed));
                     }
-                    /*Boolean t = TimeUtils.currentTime() - model.getLastOnline() < TimeUtils.MILLISECONDS_DAY; //&& res;
-                    viewHolder.setVisibility(t);*/
                 }
 
                 viewHolder.tvDetails.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent details = new Intent(getContext(), DetailsActivity.class);
+                        PostKey.postKey = post_key;
+                        PostKey.postNumber = model.getPlateNumber().toLowerCase().trim();
+                        Intent details = new Intent(getContext(), Detail.class);
                         startActivity(details);
                     }
                 });

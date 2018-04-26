@@ -15,7 +15,6 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -23,12 +22,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.techart.fleettracker.DetailsActivity;
+import com.techart.fleettracker.Detail;
+import com.techart.fleettracker.PostKey;
 import com.techart.fleettracker.R;
 import com.techart.fleettracker.models.Fleet;
 import com.techart.fleettracker.utils.FireBaseUtils;
-
-import java.util.ArrayList;
 
 
 public class Tab2Map extends Fragment{
@@ -45,11 +43,20 @@ public class Tab2Map extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
 
-        mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        mMapView = rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume(); // needed to get the map to display immediately
-
+        /*
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+        */
         populateMap();
 
         return rootView;
@@ -82,16 +89,17 @@ public class Tab2Map extends Fragment{
                         trackCount = ((int) dataSnapshot.getChildrenCount());
                         for (DataSnapshot chapterSnapShot: dataSnapshot.getChildren())
                         {
-                            Fleet chapter = chapterSnapShot.getValue(Fleet.class);
-                            double lat = chapter.getV();
-                            double log = chapter.getV2();
+                            final String key = chapterSnapShot.getKey();
+                            final Fleet fleet = chapterSnapShot.getValue(Fleet.class);
+                            double lat = fleet.getV();
+                            double log = fleet.getV2();
                             LatLng position = new LatLng(lat, log);
 
-                            MarkerOptions markerOptions = new MarkerOptions().position(position).title(chapter.getPlateNumber());
-                            if (chapter.getAmountPaid() != null) {
-                                if (chapter.getAmountPaid() <= 10) {
+                            MarkerOptions markerOptions = new MarkerOptions().position(position).title(fleet.getPlateNumber());
+                            if (fleet.getAmountPaid() != null) {
+                                if (fleet.getAmountPaid() <= 10) {
                                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                                } else if (chapter.getAmountPaid() > 10 && chapter.getAmountPaid() <= 15){
+                                } else if (fleet.getAmountPaid() > 10 && fleet.getAmountPaid() <= 15){
                                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                                 }
                             }
@@ -99,7 +107,9 @@ public class Tab2Map extends Fragment{
                             googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                 @Override
                                 public boolean onMarkerClick(Marker marker) {
-                                    Intent details = new Intent(getContext(), DetailsActivity.class);
+                                    PostKey.postKey = key;
+                                    PostKey.postNumber = fleet.getPlateNumber().toLowerCase().trim();
+                                    Intent details = new Intent(getContext(), Detail.class);
                                     startActivity(details);
                                     return true;
                                 }

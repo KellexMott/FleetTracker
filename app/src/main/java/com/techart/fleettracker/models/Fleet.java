@@ -13,7 +13,7 @@ public class Fleet {
     private Double v;
     private Double v2;
     private String status;
-    private Long lastOnline;
+    private Long lastOnLine;
     private String lastLocation;
     private String from;
     private String to;
@@ -43,12 +43,12 @@ public class Fleet {
         this.status = status;
     }
 
-    public Long getLastOnline() {
-        return lastOnline;
+    public Long getLastOnLine() {
+        return lastOnLine;
     }
 
-    public void setLastOnline(Long lastOnline) {
-        this.lastOnline = lastOnline;
+    public void setLastOnLine(Long lastOnLine) {
+        this.lastOnLine = lastOnLine;
     }
 
     public String getLastLocation() {

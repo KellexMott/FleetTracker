@@ -2,8 +2,6 @@ package com.techart.fleettracker;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
-
 
 import com.firebase.client.Firebase;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,6 +23,6 @@ public class FleetTracker extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+      //  MultiDex.install(this);
     }
 }

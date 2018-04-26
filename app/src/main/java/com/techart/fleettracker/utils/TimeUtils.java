@@ -18,6 +18,7 @@ public final class TimeUtils {
     private static final int  MONTH= 2628000;
     private static final int  YEAR= 31556926;
     private static final int MILLISECONDS_IN_A_SECOND = 1000;
+    private static final String ABOUT = "about ";
 
     private TimeUtils()
     {
@@ -71,7 +72,7 @@ public final class TimeUtils {
         if(value == 1) {
             return "a " + word;
         }
-        return value + " " + word + "s";
+        return ABOUT + value + " " + word + "s";
     }
 
     /**
@@ -81,7 +82,7 @@ public final class TimeUtils {
      */
     public static String timeStampToDate(long timePostedInMilliseconds) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
-        return simpleDateFormat.format(timePostedInMilliseconds);
+        return "on " + simpleDateFormat.format(timePostedInMilliseconds);
     }
 
     /**

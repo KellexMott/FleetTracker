@@ -6,14 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.techart.fleettracker.R;
 
 
@@ -27,7 +21,7 @@ public class Tab3Follow extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-
+/*
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -43,26 +37,115 @@ public class Tab3Follow extends Fragment{
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
+                // Do other setup activities here too, as described elsewhere in this tutorial.
+
+                // Turn on the My Location layer and the related control on the map.
+                updateLocationUI();
+
+                // Get the current location of the device and set the position of the map.
+                getDeviceLocation();
 
                 // For showing a move to my location button
-                googleMap.setMyLocationEnabled(true);
+                Polyline polyline1 = googleMap.addPolyline((new PolylineOptions())
+                        .clickable(true)
+                        .add(new LatLng(-35.016, 143.321),
+                                new LatLng(-34.747, 145.592),
+                                new LatLng(-34.364, 147.891),
+                                new LatLng(-33.501, 150.217),
+                                new LatLng(-32.306, 149.248),
+                                new LatLng(-32.491, 147.309)));
 
-                // For dropping a marker at a point on the Map
-                LatLng lusaka = new LatLng(-15.350162, 28.422661);
-                googleMap.addMarker(new MarkerOptions().position(lusaka).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(lusaka).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-/*
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(-userLat,28.3228165)).title("Lusaka"));
-                LatLngBounds LUSAKA = new LatLngBounds( new LatLng(-15.492559, 28.228482),new LatLng(-15.350162, 28.422661));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LUSAKA.getCenter(), 15));*/
             }
         });
-
+         */
         return rootView;
     }
+
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+
+        if (ContextCompat.checkSelfPermission(getContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        } */
+    }
+
+    private void updateLocationUI() {
+        /*if (mMap == null) {
+            return;
+        }
+        try {
+            if (mLocationPermissionGranted) {
+                mMap.setMyLocationEnabled(true);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            } else {
+                mMap.setMyLocationEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                mLastKnownLocation = null;
+                getLocationPermission();
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        } */
+    }
+
+    private void getDeviceLocation() {
+        /*
+         * Get the best and most recent location of the device, which may be null in rare
+         * cases when a location is not available.
+
+        try {
+            if (mLocationPermissionGranted) {
+                Task locationResult = mFusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(this, new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            // Set the map's camera position to the current location of the device.
+                            mLastKnownLocation = task.getResult();
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(mLastKnownLocation.getLatitude(),
+                                            mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
+                        } else {
+                            Log.d(TAG, "Current location is null. Using defaults.");
+                            Log.e(TAG, "Exception: %s", task.getException());
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                        }
+                    }
+                });
+            }
+        } catch(SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }   */
+    }
+    /*
+    private void getLocationPermission() {
+
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
+
+
 
     @Override
     public void onResume() {
@@ -86,5 +169,5 @@ public class Tab3Follow extends Fragment{
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
-    }
+    }*/
 }

@@ -12,4 +12,9 @@
     <string name="search_title">search for vehicle</string>
     <string name="search_icon">Search icon</string>
     <string name="action_search">Search</string>
+    <string name="title_activity_detail">Detail</string>
+    <string name="last_location">%1$s %2$s</string>
+
+    <string name="horizontal_timeline">Horizontal Timeline</string>
+    <string name="vertical_timeline">Vertical Timeline</string>
 </resources>
